@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Boostorder - Cart</title>
+    <title>Boostorder - Orders</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="{{ asset("css/app.css") }}" rel="stylesheet" />
     <script
@@ -64,60 +64,38 @@
 </head>
 <body>
     <div class="catalog_wrapper">
-        <h1 class="main_title">Cart</h1>
-
-        <button class="order_btn">
-            Cart
-            <div class="counter">{{ $cart_count }}</div>
-        </button>
+        <h1 class="main_title">Orders</h1>
 
         <div class="cart_holder">
-            @if (count($products) == 0)
+            @if (count($orders) == 0)
                 <div class="empty">
-                    <h1>Cart is empty</h1>
+                    <h1>Order is empty</h1>
                     <a href="{{ URL::route('catalog') }}">Back to catalog</a>  
                 </div>
             @else
 
-            <h2>Total Products: {{ $cart_count }}</h2>
-
-            <div class="flex">
-                @php
-                    $total = 0
-                @endphp
-                <div class="cart-list">
-                    @foreach($products as $product)
-                        @php
-                            $prod = json_decode($product['product_json'], true);
-                            $desc = strlen($prod['description']) > 250 ? substr($prod['description'], 0, 250)."..." : $prod['description'];
-                            $price = $prod['variations'][0]['regular_price'];
-                            $total += $price;
-                        @endphp
-                        <div class="cart">
-                            <div class="product_img" style="background-image: url({{ $prod['images'][0]['src'] }})"></div>
-                            <div class="right_holder">
-                                <div class="inner_right">
-                                    <div class="info">
-                                        <div class="top">
-                                            <h3>{{ $prod['name'] }}</h3>
-                                            <a class="delete-btn" data-product-id="{{ $product['product_id'] }}" href="javascript:void();">Delete</a>
-                                        </div>
-                                        <p>{!! $desc??"No description" !!}</p>
-                                    </div>
-                                    <p class="price">RM {{ number_format($price, 2, '.', ',') }}</p>
-                                </div>
-                            </div>
-                        </div>
+            <table class="order_table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Order ID</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $key => $order)
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ sprintf("%04d", $order['id']) }}</td>
+                            <td>{{ \Carbon\Carbon::parse($order['created_at'])->format('d M Y') }}</td>
+                            <td>
+                                <a href="">Update</a>
+                            </td>
+                        </tr>
                     @endforeach
-                </div>
-
-                <p>Total amount: <b>RM {{ number_format($total, 2, '.', ',') }}</b></p>
-
-                <div class="button_holder">
-                    <a href="{{ URL::route('catalog') }}">Back to catalog</a>
-                    <button class="submit-btn" data-total="{{ $total }}" data-cart-id="{{ $cart_id }}">Submit Order</button>
-                </div>
-            </div>
+                </tbody>
+            </table>
 
             @endif
         </div>

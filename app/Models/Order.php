@@ -13,4 +13,5 @@ class Order extends Model
         'total_amount',
         'status',
     ];
+    
 }

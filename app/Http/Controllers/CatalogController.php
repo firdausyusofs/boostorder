@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartProduct;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller
@@ -122,8 +124,55 @@ class CatalogController extends Controller
             {
                 $carts[] = $cartProduct['product_id'];
             }
+
+            return view('cart', [
+                'cart_count' => count($cartProducts), 
+                'products' => $cartProducts, 
+                'cart_id' => $cart->id
+            ]);
         }
 
-        return view('cart', ['cart_count' => count($cartProducts), 'products' => $cartProducts]);
+        return view('cart', ['cart_count' => 0, 'products' => [], 'cart_id' => 0]);
+    }
+
+    public function submitOrder(Request $request)
+    {
+
+        $order = Order::create([
+            'total_amount' => $request->total
+        ]);
+
+        $cartProducts = CartProduct::where(['cart_id' => $request->cart_id])->get();
+
+        foreach ($cartProducts as $product)
+        {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $product['product_id'],
+                'product_json' => $product['product_json']
+            ]);
+        }
+
+        Cart::where('id', $request->cart_id)->update(['status' => 'Ordered']);
+
+        return true;
+
+    }
+
+    public function order()
+    { 
+        $orders = Order::get();
+
+        return view('order', ['order_count' => 0, 'orders' => $orders, 'cart_id' => 0]); 
+    }
+
+    public function order_update_show()
+    {
+        return view('order_update');
+    }
+
+    public function order_update()
+    {
+
     }
 }
