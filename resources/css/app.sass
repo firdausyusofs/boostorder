@@ -12,7 +12,7 @@ body
     padding: 40px 0
     min-height: 100vh
     position: relative
-    
+
     .main_title
         color: #161616
 
@@ -38,9 +38,17 @@ body
                 background-color: #9AB3CE
                 width: 100%
                 height: 200px
+                background-position: center
+                background-size: cover
                 border-radius: 15px
                 position: relative
                 transition: all 0.25s ease-in-out
+                overflow: hidden
+
+                .product_overlay
+                    background-color: rgba(0,0,0,.2)
+                    width: 100%
+                    height: 100%
 
                 .product_price
                     position: absolute
@@ -52,14 +60,14 @@ body
                     border-radius: 10px
                     color: #161616
                     font-weight: bold
-                
+
                 .bulk_order_btn
                     cursor: pointer
                     width: calc(100% - 20px)
                     margin: 10px
                     position: absolute
                     bottom: 0
-                    padding: 5px
+                    padding: 10px
                     border-radius: 10px
                     border: none
                     background: #fff
@@ -69,15 +77,18 @@ body
                     visibility: hidden
                     transition: 0.25s all ease-in-out
 
+                    &.show
+                        opacity: 1
+                        visibility: visible
+
             .product_title
                 text-align: center
                 margin-top: 10px
                 color: #161616
 
-
     .order_btn
         position: absolute
-        bottom: 40px
+        top: 40px
         right: 0
         border-radius: 10px
         border: none
@@ -87,8 +98,102 @@ body
         font-weight: bold
         font-size: 16px
         cursor: pointer
+        display: flex
+        align-items: center
 
+        .counter
+            width: 20px
+            height: 20px
+            display: flex
+            align-items: center
+            justify-content: center
+            color: #161616
+            border-radius: 100%
+            background-color: #fff
+            margin-left: 10px
 
+    .cart_holder
+        margin-top: 40px
+        background-color: #fff
+        border-radius: 10px
+        box-shadow: 0 0px 10px 0 rgba(0,0,0,.1)
+        padding: 40px
+
+        h2
+            margin-bottom: 20px
+
+        .flex
+            display: flex
+            flex-direction: column
+            align-items: flex-end
+
+        .cart-list
+            width: 100%
+
+        .cart
+            width: 100%
+            padding: 20px
+            background: #f7f7f7
+            border-radius: 10px
+            display: flex
+            margin-bottom: 10px
+
+            .right_holder
+                margin-left: 40px
+                flex-grow: 1
+
+                .inner_right
+                    display: flex
+                    flex-direction: column
+                    height: 100%
+                    justify-content: space-between
+
+                    .info
+
+                        .top
+                            display: flex
+                            align-items: center
+                            justify-content: space-between
+
+                            h3
+                                color: #161616
+
+                            a
+                                color: #161616
+
+                        p
+                            margin-top: 10px
+                            color: #999
+
+                    .price
+                        color: #161616
+                        font-weight: bold
+
+            .product_img
+                min-width: 150px
+                background: #ccc
+                background-position: center
+                background-size: cover
+                height: 150px
+                border-radius: 10px
+
+        .button_holder
+            margin-top: 30px
+            display: flex
+            align-items: center
+
+            .submit-btn
+                margin-left: 20px
+                border: none
+                border-radius: 10px
+                padding: 10px 20px
+                background: #161616
+                color: #fff
+                font-weight: bold
+                cursor: pointer
+
+            a
+                color: #161616
 
 
 
