@@ -26,9 +26,35 @@
         $(document).ready(function() {
             $('.noti svg').click(function() {
                 $('.noti_list').toggleClass('show')
+                $.ajax({
+                    url: "{{ url('read_noti') }}",
+                    method: "get",
+                    dataType: 'json',
+                    success: function(data) {
+                        $('.red-dot').removeClass('show');
+                        // products.push(index)
+                    }
+                })
             });
 
             var products = []
+
+            setInterval(function() {
+                $.ajax({
+                    url: "{{ url('noti') }}",
+                    method: "get",
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data) {
+                            if (data.unread > 0) {
+                                $('.red-dot').addClass('show');
+                            }
+                            $('.noti_inner').html(data.html);
+                        }
+                        // products.push(index)
+                    }
+                })
+            }, 5000);
 
             $('.bulk_order_btn').click(function() {
                 var index = $(this).data('index')

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::get('/', [CatalogController::class, 'index'])->name('catalog');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/orders', [OrderController::class, 'index'])->name('order');
 Route::get('/order/{id}', [OrderController::class, 'order_update_show'])->name('order_update');
+Route::get('/noti', [NotificationController::class, 'getNoti']);
+Route::get('/read_noti', [NotificationController::class, 'readNoti']);
 
 Route::post('/add_to_cart', [CartController::class, 'addToCart']);
 Route::post('/delete_from_cart', [CartController::class, 'deleteFromCart']);
