@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [CatalogController::class, 'index'])->name('catalog');
-Route::get('/cart', [CatalogController::class, 'cart'])->name('cart');
-Route::get('/orders', [CatalogController::class, 'order'])->name('order');
-Route::get('/order/{id}', [CatalogController::class, 'order_update_show'])->name('order_update');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/orders', [OrderController::class, 'index'])->name('order');
+Route::get('/order/{id}', [OrderController::class, 'order_update_show'])->name('order_update');
 
-Route::post('/add_to_cart', [CatalogController::class, 'addToCart']);
-Route::post('/delete_from_cart', [CatalogController::class, 'deleteFromCart']);
-Route::post('/submit_order', [CatalogController::class, 'submitOrder']);
-Route::post('/update_order', [CatalogController::class, 'order_update']);
+Route::post('/add_to_cart', [CartController::class, 'addToCart']);
+Route::post('/delete_from_cart', [CartController::class, 'deleteFromCart']);
+Route::post('/submit_order', [OrderController::class, 'submitOrder']);
+Route::post('/update_order', [OrderController::class, 'order_update']);

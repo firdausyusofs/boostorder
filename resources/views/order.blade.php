@@ -80,6 +80,7 @@
                         <th>No</th>
                         <th>Order ID</th>
                         <th>Created At</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -89,6 +90,7 @@
                             <td>{{ $key+1 }}</td>
                             <td>{{ sprintf("%04d", $order['id']) }}</td>
                             <td>{{ \Carbon\Carbon::parse($order['created_at'])->format('d M Y') }}</td>
+                            <td>{{ $order['status'] }}</td>
                             <td>
                                 <a href="{{ URL::route('order_update', $order['id']) }}">Update</a>
                             </td>

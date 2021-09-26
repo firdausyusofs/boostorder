@@ -54,6 +54,21 @@ body {
   position: relative;
   margin-right: 40px;
 }
+.catalog_wrapper .top_bar .right .noti .red-dot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+.catalog_wrapper .top_bar .right .noti .red-dot.show {
+  opacity: 1;
+  visibility: visible;
+}
 .catalog_wrapper .top_bar .right .noti .noti_list {
   min-width: 350px;
   position: absolute;
@@ -71,6 +86,14 @@ body {
   visibility: hidden;
   transition: all 0.25s ease-in-out;
   cursor: default;
+  z-index: 500;
+}
+.catalog_wrapper .top_bar .right .noti .noti_list .no-noti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: rgba(22, 22, 22, 0.4);
+  transform: translate(-50%, -50%);
 }
 .catalog_wrapper .top_bar .right .noti .noti_list.show {
   opacity: 1;
