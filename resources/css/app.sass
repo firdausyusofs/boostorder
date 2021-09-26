@@ -6,6 +6,28 @@
 body
     background-color: #fff
 
+.pagination_holder
+    display: flex
+    width: 100%
+    margin-top: 40px
+    justify-content: flex-end
+
+    a
+        text-decoration: none
+        color: #161616
+
+    .page
+        padding: 5px 15px
+        background-color: #eee
+        border-radius: 10px
+        margin-left: 10px
+        cursor: pointer
+
+        &.active
+            background-color: #161616
+            color: #fff
+            font-weight: bold
+
 .catalog_wrapper
     width: 1100px
     margin: 0 auto
@@ -13,13 +35,67 @@ body
     min-height: 100vh
     position: relative
 
+    .top_bar
+        display: flex
+        width: 100%
+        align-items: center
+        justify-content: space-between
+
+        .right
+            display: flex
+            align-items: center
+
+            .noti
+                margin-top: 5px
+                cursor: pointer
+                position: relative
+                margin-right: 40px
+
+                .noti_list
+                    min-width: 350px
+                    position: absolute
+                    background-color: #fff
+                    right: 0
+                    margin-top: 20px
+                    height: 500px
+                    max-height: 500px
+                    border-radius: 15px
+                    box-shadow: 0 0px 10px 0 rgba(0,0,0,.1)
+                    overflow: hidden
+                    display: flex
+                    flex-direction: column
+                    opacity: 0
+                    visibility: hidden
+                    transition: all 0.25s ease-in-out
+                    cursor: default
+
+                    &.show
+                        opacity: 1
+                        visibility: visible
+
+                    .noti_title
+                        padding: 15px
+                        font-weight: bold
+                        background-color: #f8f8f8
+
+                    .noti_inner
+                        overflow: auto
+                        width: 100%
+                        flex-grow: 1
+
+                        div
+                            padding: 15px
+                            border-bottom: 1px solid #eee
+                            color: #161616
+                            font-size: 15px
+
     .main_title
         color: #161616
 
     .product_holder
         margin-top: 40px
         display: grid
-        grid-template-columns: 1fr 1fr 1fr 1fr
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr
         column-gap: 2em
         row-gap: 2em
 
@@ -87,9 +163,9 @@ body
                 color: #161616
 
     .order_btn
-        position: absolute
-        top: 40px
-        right: 0
+        // position: absolute
+        // top: 40px
+        // right: 0
         border-radius: 10px
         border: none
         padding: 10px 40px
@@ -118,6 +194,14 @@ body
         border-radius: 10px
         box-shadow: 0 0px 10px 0 rgba(0,0,0,.1)
         padding: 40px
+
+        select
+            width: 100%
+            padding: 10px
+            margin-bottom: 30px
+            margin-top: 20px
+            border: 1px solid #bbb
+            border-radius: 10px
 
         .empty
             text-align: center

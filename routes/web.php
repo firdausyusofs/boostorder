@@ -22,3 +22,4 @@ Route::get('/order/{id}', [CatalogController::class, 'order_update_show'])->name
 Route::post('/add_to_cart', [CatalogController::class, 'addToCart']);
 Route::post('/delete_from_cart', [CatalogController::class, 'deleteFromCart']);
 Route::post('/submit_order', [CatalogController::class, 'submitOrder']);
+Route::post('/update_order', [CatalogController::class, 'order_update']);

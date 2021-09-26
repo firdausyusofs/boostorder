@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartProduct;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
@@ -12,10 +13,12 @@ class CatalogController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
+        $page = $request->page??1;
+
         $client = new \GuzzleHttp\Client();
-        $request = $client->get('https://mangomart-autocount.myboostorder.com/wp-json/wc/v1/products', [
+        $request = $client->get('https://mangomart-autocount.myboostorder.com/wp-json/wc/v1/products?page='.$page, [
             'auth' => [
                 'ck_2682b35c4d9a8b6b6effac126ac552e0bfb315a0',
                 'cs_cab8c9a729dfb49c50ce801a9ea41b577c00ad71'
@@ -23,6 +26,10 @@ class CatalogController extends Controller
         ]);
 
         $response = json_decode($request->getBody(), true);
+
+        // dd($response);
+
+        $pages = $request->getHeaders()['X-WP-TotalPages'][0];
 
         $cart = Cart::where([
             'status' => 'New'
@@ -39,8 +46,10 @@ class CatalogController extends Controller
             }
         }
 
+        $notifications = Notification::get();
 
-        return view('catalog', ['products' => $response, 'cart_count' => count($cartProducts), 'carts' => $carts]);
+
+        return view('catalog', ['products' => $response, 'cart_count' => count($cartProducts), 'carts' => $carts, 'pages' => $pages, 'page' => $page, 'notifications' => $notifications]);
     }
 
     public function addToCart(Request $request)
@@ -126,8 +135,8 @@ class CatalogController extends Controller
             }
 
             return view('cart', [
-                'cart_count' => count($cartProducts), 
-                'products' => $cartProducts, 
+                'cart_count' => count($cartProducts),
+                'products' => $cartProducts,
                 'cart_id' => $cart->id
             ]);
         }
@@ -160,19 +169,26 @@ class CatalogController extends Controller
     }
 
     public function order()
-    { 
+    {
         $orders = Order::get();
 
-        return view('order', ['order_count' => 0, 'orders' => $orders, 'cart_id' => 0]); 
+        return view('order', ['order_count' => 0, 'orders' => $orders, 'cart_id' => 0]);
     }
 
-    public function order_update_show()
+    public function order_update_show($id)
     {
-        return view('order_update');
+        $order = Order::where('id', $id)->first();
+
+        return view('order_update', ['order' => $order, 'products' => $order->products()->get()]);
     }
 
-    public function order_update()
+    public function order_update(Request $request)
     {
+
+        Order::where('id', $request->order_id)->update(['status' => $request->status]);
+        Notification::create([
+            'message' => 'Your order '. sprintf("%04d", $request->order_id) .' has been '. strtolower($request->status),
+        ]);
 
     }
 }

@@ -70,7 +70,7 @@
             @if (count($orders) == 0)
                 <div class="empty">
                     <h1>Order is empty</h1>
-                    <a href="{{ URL::route('catalog') }}">Back to catalog</a>  
+                    <a href="{{ URL::route('catalog') }}">Back to catalog</a>
                 </div>
             @else
 
@@ -90,7 +90,7 @@
                             <td>{{ sprintf("%04d", $order['id']) }}</td>
                             <td>{{ \Carbon\Carbon::parse($order['created_at'])->format('d M Y') }}</td>
                             <td>
-                                <a href="">Update</a>
+                                <a href="{{ URL::route('order_update', $order['id']) }}">Update</a>
                             </td>
                         </tr>
                     @endforeach
