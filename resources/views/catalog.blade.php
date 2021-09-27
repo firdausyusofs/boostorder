@@ -49,7 +49,9 @@
                             if (data.unread > 0) {
                                 $('.red-dot').addClass('show');
                             }
-                            $('.noti_inner').html(data.html);
+                            if (data.html) {
+                                $('.noti_inner').html(data.html);
+                            }
                         }
                         // products.push(index)
                     }
